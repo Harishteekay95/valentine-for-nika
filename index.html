@@ -4,27 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Dearest Nika</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        /* CSS directly in the file so it never fails to load */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.3);
+            border: 2px solid white;
+            z-index: 10;
+            width: 350px;
+        }
+        #main-gif {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        h1 { color: #d63384; font-size: 2rem; margin-bottom: 10px; }
+        .message { color: #ff4d6d; font-style: italic; margin-bottom: 30px; }
+        .buttons { display: flex; justify-content: center; gap: 20px; height: 50px; position: relative; }
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        #yesBtn { background: #ff4d6d; color: white; }
+        #noBtn { background: #f8f9fa; color: #6c757d; position: absolute; transition: 0.1s; }
+        .heart { position: absolute; color: rgba(255, 255, 255, 0.7); animation: float 5s linear infinite; z-index: 1; }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-    <audio id="bgMusic" loop>
-        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-    </audio>
 
-    <div class="heart-container" id="heartContainer"></div>
+    <div id="heartContainer"></div>
 
     <div class="container">
-        <div id="content">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZpZ3R3YnZ3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3ZpbmZlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9uLGiTLBRN0pM70/giphy.gif" alt="Cute Cat" id="main-gif">
-            <h1 id="question">Nika, will you be my Valentine?</h1>
-            <p class="message">My heart beats only for you... ❤️</p>
-            <div class="buttons">
-                <button id="yesBtn">Yes! 💖</button>
-                <button id="noBtn">No 🥺</button>
-            </div>
+        <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpueGZ3bmZqZzR6eXN6eHh4eXh4eXh4eXh4eXh4eXh4eXh4eXh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/0v7o1p2h1z2m/giphy.gif" alt="Cute Cat" id="main-gif">
+        <h1 id="question">Nika, will you be my Valentine?</h1>
+        <p class="message">My heart beats only for you... ❤️</p>
+        <div class="buttons">
+            <button id="yesBtn">Yes! 💖</button>
+            <button id="noBtn">No 🥺</button>
         </div>
     </div>
-    <script src="script.js"></script> 
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const question = document.getElementById('question');
+        const mainGif = document.getElementById('main-gif');
+
+        // The Runaway Logic
+        noBtn.addEventListener('mouseover', () => {
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        });
+
+        // Floating Hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.getElementById('heartContainer').appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 300);
+
+        // Success Action
+        yesBtn.addEventListener('click', () => {
+            question.innerHTML = "I knew you'd say yes, Nika! ❤️";
+            mainGif.src = "https://media.giphy.com/media/H7v9tO9Y6p11v3I8hI/giphy.gif";
+            noBtn.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
