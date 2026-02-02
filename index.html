@@ -24,7 +24,12 @@
             border: 2px solid white;
             z-index: 10;
             width: 350px;
+            min-height: 450px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         #main-gif {
             width: 200px;
@@ -33,7 +38,7 @@
             border-radius: 15px;
             margin-bottom: 20px;
         }
-        h1 { color: #d63384; font-size: 2rem; margin-bottom: 10px; }
+        h1 { color: #d63384; font-size: 2rem; margin: 10px 0; }
         .message { color: #ff4d6d; font-style: italic; margin-bottom: 30px; }
         
         .buttons-wrapper {
@@ -41,7 +46,9 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            min-height: 50px;
+            width: 100%;
+            height: 60px;
+            position: relative;
         }
 
         button {
@@ -58,7 +65,7 @@
             background: #f8f9fa; 
             color: #6c757d; 
             position: relative; 
-            transition: 0.1s ease;
+            transition: all 0.2s ease;
         }
 
         .heart { position: absolute; color: rgba(255, 255, 255, 0.7); animation: float 5s linear infinite; z-index: 1; }
@@ -73,7 +80,7 @@
     <div id="heartContainer"></div>
 
     <div class="container">
-        <img src="https://tenor.com/oqMFx5ZhOtw.gif" alt="Cute Cat" id="main-gif">
+        <img src="https://media.tenor.com/IC6m68v796QAAAAi/peach-goma.gif" alt="Cute Cat" id="main-gif">
         
         <h1 id="question">Nika, will you be my Valentine?</h1>
         <p class="message">My heart beats only for you... ❤️</p>
@@ -90,14 +97,14 @@
         const mainGif = document.getElementById('main-gif');
 
         noBtn.addEventListener('mouseover', () => {
-            noBtn.style.position = 'absolute';
+            // Switch to absolute to allow movement
+            noBtn.style.position = 'fixed';
             
-            // This logic keeps the button at least 50px away from the screen edges
+            // Boundary settings: Keeps button inside the screen with 50px padding
             const padding = 50;
             const maxX = window.innerWidth - noBtn.offsetWidth - padding;
             const maxY = window.innerHeight - noBtn.offsetHeight - padding;
             
-            // Ensures the button doesn't go negative (off the top/left)
             const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
             const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
             
@@ -105,6 +112,7 @@
             noBtn.style.top = randomY + 'px';
         });
 
+        // Background Hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart';
@@ -117,13 +125,17 @@
         }
         setInterval(createHeart, 300);
 
+        // Click Yes Action
         yesBtn.addEventListener('click', () => {
             question.innerHTML = "I knew you'd say yes, Nika! ❤️";
-            
-            // 2. PASTE YOUR "AFTER" GIF LINK IN THE SRC BELOW
-            mainGif.src = "https://tenor.com/cv7hRwUQNmf.gif";
-            
+            // After GIF (Direct Link)
+            mainGif.src = "https://media.tenor.com/3N_48mS12p8AAAAi/peach-and-goma-goma-and-peach.gif";
             noBtn.style.display = 'none';
+            
+            // Final burst of hearts
+            for(let i=0; i<15; i++) {
+                setTimeout(createHeart, i * 100);
+            }
         });
     </script>
 </body>
